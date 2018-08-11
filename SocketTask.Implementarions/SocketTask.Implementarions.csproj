@@ -13,4 +13,10 @@
     <ProjectReference Include="..\SocketTask.Models\SocketTask.Models.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="C:\Users\Dima\.nuget\packages\nlog.config\4.5.8\contentFiles\any\any\NLog.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>
