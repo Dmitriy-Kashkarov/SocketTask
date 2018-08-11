@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="NLog.Config" Version="4.5.8" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\SocketTask.Interfaces\SocketTask.Interfaces.csproj" />
+    <ProjectReference Include="..\SocketTask.Models\SocketTask.Models.csproj" />
+  </ItemGroup>
+
+</Project>

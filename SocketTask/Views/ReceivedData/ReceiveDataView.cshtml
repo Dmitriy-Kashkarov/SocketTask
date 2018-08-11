@@ -1,0 +1,54 @@
+﻿@model IEnumerable<SocketTask.Models.ReceivedData>
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Received data from server</title>
+</head>
+<body>
+    <table>
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.AssetName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.DateTime)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.BidPrice)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.AskPrice)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.AssetName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DateTime)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.BidPrice)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.AskPrice)
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</body>
+</html>
