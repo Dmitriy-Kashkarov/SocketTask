@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
@@ -176,6 +177,12 @@ namespace SocketTask.Implementarions
         {
             const char separator = ' ';
 
+            if (received.Contains("Login") || received.Contains("Password"))
+            {
+                _logger.Error("Incorrect data for parsing");
+                return;
+            }
+
             if (string.IsNullOrEmpty(received))
             {
                 _logger.Error("Incorrect data for parsing");
@@ -184,22 +191,29 @@ namespace SocketTask.Implementarions
 
             SafeExecution(() =>
             {
-                var parsedResult = received.Split(separator);
+                var list = received.Split('\r', '\n').ToList().Where(s => !string.IsNullOrEmpty(s)).ToList();
 
-                var receivedData = new ReceivedData
+                foreach (var str in list)
                 {
-                    Id = Guid.NewGuid(),
-                    AssetName = parsedResult[0],
-                    DateTime = DateTime.Parse(parsedResult[1]),
-                    BidPrice = double.Parse(parsedResult[2]),
-                    AskPrice = double.Parse(parsedResult[3].TrimEnd('\r', '\n'))
-                };
+                    var parsedString = str.Split(separator);
 
-                if (_receiveDataRepository.GetByAssertName(receivedData.AssetName) != null)
-                    _receiveDataRepository.UpdateData(receivedData);
-                else
-                    _receiveDataRepository.AddData(receivedData);
+                    if (parsedString.Length < 4)
+                        continue;
 
+                    var receivedData = new ReceivedData
+                    {
+                        Id = Guid.NewGuid(),
+                        AssetName = parsedString[0],
+                        DateTime = DateTime.Parse(parsedString[1]),
+                        BidPrice = double.Parse(parsedString[2]),
+                        AskPrice = double.Parse(parsedString[3].TrimEnd('\r', '\n'))
+                    };
+
+                    if (_receiveDataRepository.GetByAssertName(receivedData.AssetName) != null)
+                        _receiveDataRepository.UpdateData(receivedData);
+                    else
+                        _receiveDataRepository.AddData(receivedData);
+                }
             }, "Parsing srting error");
         }
 
